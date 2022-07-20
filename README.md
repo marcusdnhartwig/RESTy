@@ -35,6 +35,51 @@ Refactor the RESTy application as follows:
 ## Lab 26
 ![img](/assets/Screen%20Shot%202022-07-18%20at%205.43.32%20PM.png)
 
+# Phase 2:
+
+*we will be receiving user input in preparation of connecting to live APIs, using the useState() hook in our functional components*
+
+## User Stories:
+
+- As a user, I want to enter the REST Method and URL to an API
+
+- As a user, I want to see a summary of my request as well as results returned from an API request in my browser in a readable format
+
+## Application Flow:
+
+- User enters an API URL
+
+- Chooses a REST Method
+
+- Clicks the “Go” button
+
+- Application fetches data from the URL given, with the method specified
+
+- Displays the response headers and results separately
+
+- Both headers and results should be “pretty printed” JSON
+
+## Technical Requirements / Note
+
+*Extend your React Application so that your functional components are able to manage their own state variables using the useState Hook.* 
+*NOTE: It is not a requirement to make the actual API call. That can be mocked with “fake” data*
+
+1. Refactor any components using this.setState to implement the useState react API hook.
+
+2. Refactor the Form Component to implement user input from form elements, instead of hard coded string values.
+
+## Tests
+
+- Install the React Testing Library framework
+
+- Assert that upon submitting the form will result in data being rendered in the output area
+
+- Install the GitHub action that will auto-run your tests on all check-ins
+
+## Lab 27:
+
+![img](/assets/Screen%20Shot%202022-07-19%20at%201.40.10%20PM.png)
+
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////
