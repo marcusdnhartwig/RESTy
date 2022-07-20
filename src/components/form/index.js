@@ -1,75 +1,75 @@
 import React from 'react';
-
 import './form.scss';
 
-// class Form extends React.Component {
-//   handleSubmit = e => {
-//     e.preventDefault();
-//     const formData = {
-//       method: 'GET',
-//       url: 'https://pokeapi.co/api/v2/pokemon',
-//     };
-//     this.props.handleApiCall(formData);
-//   }
-
-//   render() {
-//     console.log(this.props.handleApiCall);
-//     return (
-//       <>
-//         <form onSubmit={this.handleSubmit}>
-//           <label >
-//             <span>URL: </span>
-//             <input name='url' type='text' />
-//             <button type="submit">GO!</button>
-//           </label>
-//           <label className="methods">
-//             <span id="get">GET</span>
-//             <span id="post">POST</span>
-//             <span id="put">PUT</span>
-//             <span id="delete">DELETE</span>
-//           </label>
-//         </form>
-//       </>
-//     );
-//   }
-// }
-
-
-const Form = (props) => {
-  
-  const { handleApiCall } = props;
-  
-  let handleSubmit = e => {
-    e.preventDefault();
-    const formData = {
-      method: 'GET',
-      url: 'https://pokeapi.co/api/v2/pokemon',
-    };
-    handleApiCall(formData);
+class Form extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      urls: [],
+      methods: [],
+    }
   }
 
+  addUrlWithImplicitBinding = () => {
+    this.setState({
+      urls: [...this.state.urls, this.state.input],
+      methods: [...this.state.methods, this.state.method],
+    });
+  }
 
-  console.log(handleApiCall);
-  return (
-    <>
-      <form onSubmit={() => handleSubmit()}>
-        <label >
-          <span>URL: </span>
-          <input name='url' type='text' />
-          <button type="submit">GO!</button>
-        </label>
-        <label className="methods">
-          <span id="get">GET</span>
-          <span id="post">POST</span>
-          <span id="put">PUT</span>
-          <span id="delete">DELETE</span>
-        </label>
-      </form>
-    </>
-  );
+  handleChange = (e) => {
+    this.setState({ input: e.target.value });
+  }
 
+  handleMethodChange = (e) => {
+    this.setState({ method: e.target.value })
+  }
+
+  render() {
+    return (
+      <section className="App-form">
+        <form>
+          <label>URL:</label>
+          <input onChange={this.handleChange} type='text' value={this.state.input} />
+          <button type="button" onClick={this.addUrlWithImplicitBinding}>GO!</button>
+          <div id="rest-buttons">
+            <div className="method-buttons">
+              <label>
+                <input onChange={this.handleMethodChange} name="method" type="radio" value="GET" />
+                <span>GET</span>
+              </label>
+            </div>
+            <div className="method-buttons">
+              <label>
+                <input onChange={this.handleMethodChange} name="method" type="radio" value="POST" />
+                <span>POST</span>
+              </label>
+            </div>
+            <div className="method-buttons">
+              <label>
+                <input onChange={this.handleMethodChange} name="method" type="radio" value="PUT" />
+                <span>PUT</span>
+              </label>
+            </div>
+            <div className="method-buttons">
+              <label>
+                <input onChange={this.handleMethodChange} name="method" type="radio" value="DELETE" />
+                <span>DELETE</span>
+              </label>
+            </div>
+          </div>
+        </form>
+        <article>
+          <ul className="selected-methods">
+            {this.state.methods.map((method) => <li>{method}</li>)}
+          </ul>
+          <ul className="selected-urls">
+            {this.state.urls.map((url) => <li>{url}</li>)}
+          </ul>
+        </article>
+      </section>
+    )
+  }
 }
-
-
 
 export default Form;
