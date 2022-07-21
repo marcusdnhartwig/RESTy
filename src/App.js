@@ -1,50 +1,50 @@
-import React from 'react';
+import { useEffect, useState } from "react";
+import axios from 'axios';
 import './app.scss';
 
-// Let's talk about using index.js and some other name in the component folder
-// There's pros and cons for each way of doing this ...
-import Header from './components/header';
 import Footer from './components/footer';
 import Form from './components/form';
+import Header from './components/header';
 import Results from './components/results';
 
-// Classes need to extend the React.Component class from the react library
-class App extends React.Component {
-  constructor() {
-    // this function activates React.Component powers from the imported library.
-    super();
-    // this object shoudl contain all information ourcomponent needs
-    this.state = {
-      number: 1,
-    }
-    // this.number = 1;
+const App = () => {
+
+  const [data, setData] = useState(null);
+  const [requestParams, setRequestParams] = useState({});
+  const [results, setResults] = useState()
+  const [count, setCount] = useState();
+
+  function callApi(requestParams){
+    const data = {
+      count,
+      results,
+    };
+    setData(data);
+    setRequestParams(requestParams);
   }
 
+  useEffect(() => {
+    axios.get('https://pokeapi.co/api/v2/pokemon')
+      .then(response => setResults(response.data.results))
+  }, [])
 
-  log(num) {
-    console.log('Hey from component');
-    // in order for this to trigger a re-render we need to call a method passed down from React.Component
-    // this makes a re-render is triggered
-    this.setState({ number: num + 1 });
-  }
+  useEffect(() => {
+    axios.get('https://pokeapi.co/api/v2/pokemon')
+      .then(number => setCount(number.data.count) )
+  }, [])
 
+  return (
+    <>
+      <Header />
+      <div>Request Method: {requestParams.method}</div>
+      <div>URL: {requestParams.url}</div>
+      <div>JSON Body: {requestParams.body}</div>
+      <Form handleApiCall={callApi} />
+      <Results data={data} />
+      <Footer />
+    </>
 
-  // runs constantly in react, to render things to he DOM.
-  render() {
-    return (
-      <div className="App">
-        <Header />
-        <div>
-          {/* Here is a header */}
-        {/* in order for `this` to refer properly to a react component*/}
-          {/* <button onClick={() => this.log(this.state.number)}>Log Something {this.state.number}</button> */}
-        </div>
-        <Form />
-        {/* <article></article> */}
-        <Footer />
-      </div>
-    )
-  }
+  );
 }
 
 export default App;

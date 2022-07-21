@@ -1,6 +1,6 @@
 # RESTy
 
-## Phase 1: 
+# Phase 1: 
 
 *Today, we begin the first of a 4-Phase build of the RESTy application, written in React. In this first phase, our goal is to setup the basic scaffolding of the application, with intent being to add more functionality to the system as we go. This initial build sets up the file structure so that we can progressively build this application in a scalable manner*
 
@@ -79,6 +79,53 @@ Refactor the RESTy application as follows:
 ## Lab 27:
 
 ![img](/assets/Screen%20Shot%202022-07-19%20at%201.40.10%20PM.png)
+
+# Phase 3
+
+ - We will be connecting RESTy to live APIs, fetching and displaying remote data. Our primary focus will be to service GET requests.
+
+## User Stories:
+
+* As a user, I want to enter the URL to an API and issue a GET request so that I can retrieve it’s data
+
+* As a user, I want to see the results returned from an API request in my browser in a readable format
+
+## Application Flow:
+
+* User enters an API URL
+
+* Chooses a REST Method
+
+* Clicks the “Go” button
+
+* Application fetches data from the URL given, with the method specified
+
+* Displays the response headers and results separately
+
+* Both headers and results should be “pretty printed” JSON
+
+## Technical Requirements / Note
+
+*Extend your application to include the ability to send http requests and display response data, when the Form experiences a submission event.*
+
+1. Refactor application methods to allow for browser side HTTP requests to be sent.
+
+  * Your implementation should allow the user to set a url, method, and request body.
+
+2. Make sure all relavent request and response data is displayed to the User.
+
+## Testing
+
+- Install the React Testing Library framework
+
+- Assert that upon submitting the form will result in data being rendered in the output area
+
+- You will need to “mock” the API request with React Testing Library
+
+  - Note the example here: https://testing-library.com/docs/react-testing-library/example-intro/
+
+    - This shows how to use the msw package to setup a fake server that returns fake data in your tests so that you can run tests without having to call an actual API
+
 
 //////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////

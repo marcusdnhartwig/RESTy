@@ -1,0 +1,13 @@
+$bg-color: white;
+$text-color: black;
+
+section {
+  width: 50%;
+  margin: auto;
+  margin-top: 25px;
+  margin-bottom: 25px;
+  padding: 20px;
+  background-color: $bg-color;
+  color: $text-color;
+  border: 1px black solid;
+}

@@ -1,75 +1,61 @@
-import React from 'react';
 import './form.scss';
+import { useState } from "react";
 
-class Form extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      urls: [],
-      methods: [],
-    }
+const Form = (props) => {
+
+  const [method, setMethod] = useState('GET');
+  const [url, setUrl] = useState('https://pokeapi.co/api/v2/pokemon');
+  const [body, setBody] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const formData = {
+      method,
+      url,
+      body,
+    };
+    props.handleApiCall(formData);
   }
 
-  addUrlWithImplicitBinding = () => {
-    this.setState({
-      urls: [...this.state.urls, this.state.input],
-      methods: [...this.state.methods, this.state.method],
-    });
-  }
+  const handleMethod = (e) => {
+    setMethod(e.target.id)
+    setBody('')
+  };
 
-  handleChange = (e) => {
-    this.setState({ input: e.target.value });
-  }
+  const handleUrl = (e) => {
+    setUrl(e.target.value)
+  };
 
-  handleMethodChange = (e) => {
-    this.setState({ method: e.target.value })
-  }
+  const handleJson = (e) => {
+    setBody(e.target.value)
+  };
 
-  render() {
-    return (
-      <section className="App-form">
-        <form>
-          <label>URL:</label>
-          <input onChange={this.handleChange} type='text' value={this.state.input} />
-          <button type="button" onClick={this.addUrlWithImplicitBinding}>GO!</button>
-          <div id="rest-buttons">
-            <div className="method-buttons">
-              <label>
-                <input onChange={this.handleMethodChange} name="method" type="radio" value="GET" />
-                <span>GET</span>
-              </label>
-            </div>
-            <div className="method-buttons">
-              <label>
-                <input onChange={this.handleMethodChange} name="method" type="radio" value="POST" />
-                <span>POST</span>
-              </label>
-            </div>
-            <div className="method-buttons">
-              <label>
-                <input onChange={this.handleMethodChange} name="method" type="radio" value="PUT" />
-                <span>PUT</span>
-              </label>
-            </div>
-            <div className="method-buttons">
-              <label>
-                <input onChange={this.handleMethodChange} name="method" type="radio" value="DELETE" />
-                <span>DELETE</span>
-              </label>
-            </div>
-          </div>
-        </form>
-        <article>
-          <ul className="selected-methods">
-            {this.state.methods.map((method) => <li>{method}</li>)}
-          </ul>
-          <ul className="selected-urls">
-            {this.state.urls.map((url) => <li>{url}</li>)}
-          </ul>
-        </article>
-      </section>
-    )
-  }
+  return (
+    <>
+      <form onSubmit={handleSubmit} data-testid="submit-form">
+        <label >
+          <span>URL: </span>
+          <input onChange={handleUrl} name='url' type='text' />
+          <button type="submit">GO!</button>
+        </label>
+        <label className="methods">
+          <span id="GET" onClick={handleMethod}>GET</span>
+          <span id="POST" onClick={handleMethod}>POST</span>
+          <span id="PUT" onClick={handleMethod}>PUT</span>
+          <span id="DELETE" onClick={handleMethod}>DELETE</span>
+        </label>
+          {method === "PUT" || method === "POST" 
+            ?
+            <>
+            <h4> JSON Body</h4>
+            <textarea type='text' onChange={handleJson}>{}</textarea> 
+            </>
+            : 
+            null 
+          }
+      </form>
+    </>
+  );
 }
 
 export default Form;
