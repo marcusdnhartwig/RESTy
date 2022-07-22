@@ -78,7 +78,7 @@ Refactor the RESTy application as follows:
 
 ## Lab 27:
 
-![img](/assets/Screen%20Shot%202022-07-19%20at%201.40.10%20PM.png)
+![img](./assets/Screen%20Shot%202022-07-21%20at%205.21.21%20PM.png)
 
 # Phase 3
 
@@ -126,11 +126,54 @@ Refactor the RESTy application as follows:
 
     - This shows how to use the msw package to setup a fake server that returns fake data in your tests so that you can run tests without having to call an actual API
 
+# Phase 4
 
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////
+In phase 4, we will be tracking every API call and storing it in history
+
+## User Stories
+
+As a user, I want to see a list of my previous API calls, so that I can see the results again, quickly
+
+## Aplication Flow
+
+* User enters an API URL
+
+* Chooses a REST Method
+
+* Clicks the “Go” button
+
+* Application fetches data from the URL given, with the method specified
+
+* Application stores the API request and returned data into state
+
+  * Updates the list of previous API calls
+
+* Application Displays the response headers and results separately
+
+  * Both headers and results should be “pretty printed” JSON
+
+## Technical Requirements / Note
+
+*Refactor your state management within the App component to use the useReducer hook.*
+
+1. Replace any component state managements to use derived state from useReducer with a reducer function and intitial state.
+
+## Testing
+
+1. Install the React Testing Library framework.
+
+2. Assert that upon submitting the form will result in data being rendered in the output area.
+
+3. You will need to “mock” the API request with React Testing Library.
+
+  - Note the example here: https://testing-library.com/docs/react-testing-library/example-intro/
+
+    - This shows how to use the msw package to setup a fake server that returns fake data in your tests so that you can run tests without having to call an actual API.
+
+![img](./assets/Screen%20Shot%202022-07-21%20at%205.19.11%20PM.png)
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
 # Getting Started with Create React App
 
