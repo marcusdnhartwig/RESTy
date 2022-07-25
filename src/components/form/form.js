@@ -1,64 +1,53 @@
 import React from 'react';
+import { useState } from "react";
 import './form.scss';
 
+const Form = (props) => {
 
-class Form extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      urls: '',
-      methods: '',
-    }
-  }
-  handleSubmit = async (e) => {
+  const { handleApiCall } = props;
+  const [data, setData] = useState("");
+  const [method, setMethod,] = useState();
+  const [url, setUrl,] = useState("");
 
+  let handleSubmit = e => {
     e.preventDefault();
-
-    await this.setState({
-      urls: e.target.url.value,
-      methods: e.target.method.value
-    });
-
-    this.props.updateResults({ ...this.state });
+    const formData = {
+      method,
+      url,
+      data: data,
+    };
+    handleApiCall(formData);
   }
 
-  render() {
-    return (
-      <section className="App-form">
-        <form onSubmit={this.handleSubmit}>
-          <label>URL:</label>
-          <input id="input-text" name="url" type='text' />
+  let handleMethod = e => {
+    setMethod(e.target.id)
+  }
+
+  const handleChange = (e) => {
+    let { name, value } = e.target;
+    if (name === "url") setUrl(value);
+    if (name === "body") setData(value);
+  };
+  return (
+    <>
+      <form onSubmit={handleSubmit}>
+        <label >
+          <span>URL: </span>
+          <input name='url' type='text' onChange={handleChange} />
           <button type="submit">GO!</button>
-          <div id="rest-buttons">
-            <div className="method-buttons">
-              <label>
-                <input name="method" type="radio" value="GET" />
-                <span>GET</span>
-              </label>
-            </div>
-            <div className="method-buttons">
-              <label>
-                <input name="method" type="radio" value="POST" />
-                <span>POST</span>
-              </label>
-            </div>
-            <div className="method-buttons">
-              <label>
-                <input name="method" type="radio" value="PUT" />
-                <span>PUT</span>
-              </label>
-            </div>
-            <div className="method-buttons">
-              <label>
-                <input name="method" type="radio" value="DELETE" />
-                <span>DELETE</span>
-              </label>
-            </div>
-          </div>
-        </form>
-      </section>
-    )
-  }
+        </label>
+        <label className="methods">
+          <span id="GET" onClick={handleMethod}>GET</span>
+          <span id="POST" onClick={handleMethod}>POST</span>
+          <span id="PUT" onClick={handleMethod}>PUT</span>
+          <span id="DELETE" onClick={handleMethod}>DELETE</span>
+        </label>
+      </form>
+    </>
+  );
+
 }
+
+
 
 export default Form;

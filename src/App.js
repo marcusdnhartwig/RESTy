@@ -1,85 +1,62 @@
 import React from 'react';
-import './App.scss';
+import { useState, useEffect } from "react";
 
-import Header from './components/header/header.js';
-import Form from './components/form/form.js';
-//import Results from './components/results/results.js'
-import Footer from './components/footer/footer.js';
-import History from './components/history/history.js';
+import './app.scss';
 
-// Classes need to extend the React.Component class from the react library
-class App extends React.Component {
-  constructor() {
-    // this function activates React.Component powers from the imported library.
-    super();
-    // this object shoudl contain all information ourcomponent needs
-    this.state = {
-      urls: [],
-      methods: [],
-      body: [],
-      headers: {},
-      history: [],
-      count: 0,
-      isLoading: false,
-      initialPage: true,
-      isDataVisible: false,
+// Let's talk about using index.js and some other name in the component folder
+// There's pros and cons for each way of doing this ...
+import Header from './components/header';
+import Footer from './components/footer';
+////
+//
+//
+
+import Form from './components/form';
+import Results from './components/results';
+import axios from 'axios';
+
+const App = () => {
+
+  const [data, setData] = useState(null);
+
+  // make sure when dealing with the params or api stuff that useState accepts an object it was crashing because i was using it without brackets
+  const [requestParams, setRequestParams] = useState({});
+
+  let callApi = (requestParams) => {
+    setRequestParams(requestParams);
+  }
+
+  useEffect(() => {
+    if (requestParams.url) {
+      try {
+        async function getData() {
+          let apiUrl = requestParams.url;
+          const response = await axios(apiUrl);
+          const resultData = {
+            Headers: response.headers,
+            count: response.data.count,
+            Response: response
+          };
+          setData(resultData);
+        }
+        getData();
+      } catch (e) {
+        console.log(e);
+      }
     }
-  }
+  }, [requestParams]);
 
-  toggleMenu = () => {
-    this.setState({ isDataVisible: !this.state.isDataVisible });
-  }
+  return (
+    <>
+      <Header />
+      <div>Request Method: {requestParams.method}</div>
+      <div>URL: {requestParams.url}</div>
+      <Form handleApiCall={callApi} />
+      <Results data={data} />
+      <Footer />
+    </>
+  );
 
-  updateResults = async (userInput) => {
-    console.log('this is user input', userInput);
-    this.setState({
-      initialPage: false,
-      isLoading: true,
-      urls: [...this.state.urls, userInput.urls],
-      methods: [this.state.methods, userInput.methods],
-    })
-
-    const request = await fetch(userInput.urls, { methods: userInput.methods });
-    const data = await request.json();
-
-    if (data) {
-      this.toggleMenu();
-    }
-    let dataInstance = {
-      url: userInput.urls,
-      method: userInput.methods,
-      body: data,
-    }
-    let updateHistory = [...this.state.history, dataInstance];
-    localStorage.setItem('queryHistory', JSON.stringify(updateHistory));
-
-    await this.setState({
-      body: data,
-      isLoading: false,
-      history: updateHistory,
-    })
-  }
-
-  componentDidMount() {
-    let history = JSON.parse(localStorage.getItem('queryHistory')) || [];
-    this.setState({ history });
-  }
-
-  // runs constantly in react, to render things to the DOM.
-  render() {
-    return (
-      <div className="App">
-          <Header />
-        <div>
-        </div>
-        <Form updateResults={this.updateResults} />
-        <main>
-          <History history={this.state.history} />
-        </main>
-        <Footer />
-      </div>
-    )
-  }
 }
 
 export default App;

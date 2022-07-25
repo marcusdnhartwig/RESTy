@@ -1,10 +1,9 @@
 import React from 'react';
 import './footer.scss';
 
-function Footer() {
+export default function Footer() {
   return (
-    <footer className="App-footer">&copy; 2021 Code Fellows- Marcus Hartwig - Code 401</footer>
-  )
+    <footer>&copy; 2022 -- Code Fellows -- Marcus Hartwig</footer>
+  );
 }
 
-export default Footer;
